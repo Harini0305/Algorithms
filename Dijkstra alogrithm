@@ -1,0 +1,103 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyN6QICqMVLRiAI91gNYMvt/",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Harini0305/Algorithms/blob/main/Dijkstra%20alogrithm\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import heapq  # For the priority queue (min-heap)\n",
+        "\n",
+        "def dijkstra(graph, start_vertex):\n",
+        "\n",
+        "    distances = {vertex: float('inf') for vertex in graph}\n",
+        "    distances[start_vertex] = 0\n",
+        "\n",
+        "\n",
+        "    priority_queue = [(0, start_vertex)]\n",
+        "\n",
+        "\n",
+        "    while priority_queue:\n",
+        "\n",
+        "        current_distance, current_vertex = heapq.heappop(priority_queue)\n",
+        "\n",
+        "\n",
+        "        if current_distance > distances[current_vertex]:\n",
+        "            continue\n",
+        "\n",
+        "\n",
+        "        for neighbor, weight in graph[current_vertex].items():\n",
+        "            distance = current_distance + weight\n",
+        "\n",
+        "\n",
+        "            if distance < distances[neighbor]:\n",
+        "                distances[neighbor] = distance\n",
+        "                heapq.heappush(priority_queue, (distance, neighbor))\n",
+        "\n",
+        "    return distances\n",
+        "\n",
+        "\n",
+        "\n",
+        "graph = {\n",
+        "    'A': {'B': 1, 'C': 4},\n",
+        "    'B': {'A': 1, 'C': 2, 'D': 5},\n",
+        "    'C': {'A': 4, 'B': 2, 'D': 1},\n",
+        "    'D': {'B': 5, 'C': 1}\n",
+        "}\n",
+        "\n",
+        "\n",
+        "start_vertex = 'A'\n",
+        "distances = dijkstra(graph, start_vertex)\n",
+        "\n",
+        "\n",
+        "print(\"Shortest distances from vertex\", start_vertex)\n",
+        "for vertex, distance in distances.items():\n",
+        "    print(f\"To {vertex}: {distance}\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8uSQRrTEQjjB",
+        "outputId": "8502f21a-30e3-49ba-85b2-84014776640b"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Shortest distances from vertex A\n",
+            "To A: 0\n",
+            "To B: 1\n",
+            "To C: 3\n",
+            "To D: 4\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
